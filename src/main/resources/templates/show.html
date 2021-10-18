@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Cars</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p th:text="${car.brand}">Brand</p>
+    <p th:text="${car.model}">Model</p>
+    <p th:text="${car.productionYear}">Production Year</p>
+    <p th:text="${car.weight}">Weight</p>
+    <p th:text="${car.horsePowers}">Horse Powers</p>
+
+    <a th:href="@{/cars/{idCar}/edit(idCar=${car.id})}">Edit</a>
+
+    <form th:method="GET" th:action="@{/cars/{idCar}/delete(idCar=${car.id})}">
+        <input type="submit" value="Delete">
+    </form>
+</body>
+</html>

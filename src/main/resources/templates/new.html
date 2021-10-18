@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>New car</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <form th:method="POST" th:action="@{/cars}" th:object="${car}">
+        <label for="brand">Enter brand: </label>
+        <input type="text" th:field="*{brand}" id="brand">
+        <div style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">Brand error</div>
+        <br/>
+
+        <label for="model">Enter model: </label>
+        <input type="text" th:field="*{model}" id="model">
+        <div style="color:red" th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Model error</div>
+        <br/>
+
+        <label for="productionYear">Enter production year: </label>
+        <input type="text" th:field="*{productionYear}" id="productionYear">
+        <div style="color:red" th:if="${#fields.hasErrors('productionYear')}" th:errors="*{productionYear}">Production Year error</div>
+        <br/>
+
+        <label for="weight">Enter weight: </label>
+        <input type="text" th:field="*{weight}" id="weight">
+        <div style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">Weight error</div>
+        <br/>
+
+        <label for="horsePowers">Enter horse powers: </label>
+        <input type="text" th:field="*{horsePowers}" id="horsePowers">
+        <div style="color:red" th:if="${#fields.hasErrors('horsePowers')}" th:errors="*{horsePowers}">Horse powers error</div>
+        <br/>
+
+        <input type="submit" value="Add new car">
+    </form>
+</body>
+</html>

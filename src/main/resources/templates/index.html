@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Cars</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div th:switch="${cars}">
+        <h2 th:case="null">No cars yet!</h2>
+        <div th:case="*">
+            <h2>Cars</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Production Year</th>
+                    <th>Weight</th>
+                    <th>Horse Powers</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="car : ${cars}">
+                    <td th:text="${car.brand}" align="center"></td>
+                    <td th:text="${car.model}" align="center"></td>
+                    <td th:text="${car.productionYear}" align="center"></td>
+                    <td th:text="${car.weight}" align="center"></td>
+                    <td th:text="${car.horsePowers}" align="center"></td>
+                    <td><a th:href="@{/cars/{idCar}/edit(idCar=${car.id})}" align="center">Edit</a></td>
+                    <td><a th:href="@{/cars/{idCar}/delete(idCar=${car.id})}" align="center">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>

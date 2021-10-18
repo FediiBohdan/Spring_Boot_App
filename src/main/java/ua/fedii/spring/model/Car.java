@@ -1,6 +1,9 @@
 package ua.fedii.spring.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="car")
@@ -11,18 +14,25 @@ public class Car {
     private int id;
 
     @Column(name="brand")
+    @NotEmpty(message = "Brand is required!")
+    @Size(min = 2, max = 15, message = "Brand should be between 2 and 15 characters!")
     private String brand;
 
     @Column(name="model")
+    @NotEmpty(message = "Model is required!")
+    @Size(min = 2, max = 15, message = "Model should be between 2 and 15 characters!")
     private String model;
 
     @Column(name="production_year")
+    @Min(value = 1880, message = "Production year should be grater than 1880!")
     private int productionYear;
 
     @Column(name="weight")
+    @Min(value = 500, message = "Car weight should be grater than 500!")
     private float weight;
 
     @Column(name="horse_powers")
+    @Min(value = 2, message = "Car should have more than 2 horse powers!")
     private int horsePowers;
 
     public Car() {}
