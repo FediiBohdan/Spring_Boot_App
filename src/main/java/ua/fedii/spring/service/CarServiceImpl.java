@@ -28,7 +28,7 @@ public class CarServiceImpl implements CarService {
 			car = result.get();
 		}
 		else {
-			throw new RuntimeException("Did not find car id - " + id);
+			throw new RuntimeException("Did not find car with id: " + id);
 		}
 		
 		return car;

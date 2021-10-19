@@ -16,10 +16,10 @@ public class CarControllerImpl {
     @Autowired
     private CarService carService;
 
-    @GetMapping("/index")
+    @GetMapping("/show_all")
     public String index(Model model) {
         model.addAttribute("cars", carService.findAll());
-        return ("index");
+        return ("show_all");
     }
 
     @GetMapping("/{idCar}")
@@ -41,7 +41,7 @@ public class CarControllerImpl {
         }
 
         carService.save(car);
-        return "redirect:/cars/index";
+        return "redirect:/cars/show_all";
     }
 
     @GetMapping("/edit/{idCar}")
@@ -53,12 +53,13 @@ public class CarControllerImpl {
     @PostMapping("/{idCar}")
     public String update(@ModelAttribute("car") @Valid Car car, BindingResult bindingResult, @PathVariable("idCar") int idCar) {
         if (bindingResult.hasErrors()) {
-            car.setId(idCar);
             return "edit";
         }
 
+        car.setId(idCar);
+
         carService.save(car);
-        return "redirect:/cars/index";
+        return "redirect:/cars/show_all";
     }
 
     @GetMapping("/delete/{idCar}")
@@ -66,10 +67,10 @@ public class CarControllerImpl {
         Car car = carService.findById(idCar);
 
         if (car == null) {
-            throw new RuntimeException("Car id not found - " + idCar);
+            throw new RuntimeException("Did not find car with id: " + idCar);
         }
 
         carService.deleteById(idCar);
-        return "redirect:/cars/index";
+        return "redirect:/cars/show_all";
     }
 }

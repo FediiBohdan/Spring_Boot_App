@@ -1,6 +1,7 @@
 package ua.fedii.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.fedii.spring.model.Car;
 import ua.fedii.spring.service.CarService;
@@ -19,11 +20,11 @@ public class RestCarControllerImpl {
     }
 
     @GetMapping("/cars/{carId}")
-    public Car getCar(@PathVariable int carId) {
-        Car car = carService.findById(carId);
+    public Car getCar(@PathVariable int idCar) {
+        Car car = carService.findById(idCar);
 
         if (car == null) {
-            throw new RuntimeException("Car id not found - " + carId);
+            throw new RuntimeException("Car id not found: " + idCar);
         }
 
         return car;
@@ -50,11 +51,11 @@ public class RestCarControllerImpl {
         Car car = carService.findById(idCar);
 
         if (car == null) {
-            throw new RuntimeException("Car id not found - " + idCar);
+            throw new RuntimeException("Did not find car with id: " + idCar);
         }
 
         carService.deleteById(idCar);
 
-        return "Deleted car id - " + idCar;
+        return "Deleted car id: " + idCar;
     }
 }
