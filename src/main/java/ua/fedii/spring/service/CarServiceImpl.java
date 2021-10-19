@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
-
 	@Autowired
 	private CarRepository carRepository;
 
@@ -29,7 +28,6 @@ public class CarServiceImpl implements CarService {
 			car = result.get();
 		}
 		else {
-			// we didn't find the employee
 			throw new RuntimeException("Did not find car id - " + id);
 		}
 		
@@ -45,7 +43,6 @@ public class CarServiceImpl implements CarService {
 	public void deleteById(int id) {
 		carRepository.deleteById(id);
 	}
-
 }
 
 

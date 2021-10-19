@@ -5,13 +5,11 @@ import ua.fedii.spring.model.Car;
 import java.util.List;
 
 public interface CarService {
+	List<Car> findAll();
+	
+	Car findById(int id);
+	
+	void save(Car car);
 
-	public List<Car> findAll();
-	
-	public Car findById(int id);
-	
-	public void save(Car car);
-	
-	public void deleteById(int id);
-	
+	void deleteById(int id);
 }

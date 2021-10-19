@@ -1,5 +1,8 @@
 package ua.fedii.spring.model;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -7,6 +10,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="car")
+@SQLDelete(sql = "UPDATE car SET is_deleted = true WHERE id = ?")
+@Where(clause = "is_deleted = false")
 public class Car {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -20,7 +25,7 @@ public class Car {
 
     @Column(name="model")
     @NotEmpty(message = "Model is required!")
-    @Size(min = 2, max = 15, message = "Model should be between 2 and 15 characters!")
+    @Size(min = 2, max = 25, message = "Model should be between 2 and 25 characters!")
     private String model;
 
     @Column(name="production_year")
@@ -35,23 +40,28 @@ public class Car {
     @Min(value = 2, message = "Car should have more than 2 horse powers!")
     private int horsePowers;
 
+    @Column(name="is_deleted")
+    private boolean isDeleted;
+
     public Car() {}
 
-    public Car(String brand, String model, int productionYear, float weight, int horsePowers) {
+    public Car(String brand, String model, int productionYear, float weight, int horsePowers, boolean isDeleted) {
         this.brand = brand;
         this.model = model;
         this.productionYear = productionYear;
         this.weight = weight;
         this.horsePowers = horsePowers;
+        this.isDeleted = isDeleted;
     }
 
-    public Car(int id, String brand, String model, int productionYear, float weight, int horsePowers) {
+    public Car(int id, String brand, String model, int productionYear, float weight, int horsePowers, boolean isDeleted) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.productionYear = productionYear;
         this.weight = weight;
         this.horsePowers = horsePowers;
+        this.isDeleted = isDeleted;
     }
 
     public int getId() {
@@ -100,6 +110,14 @@ public class Car {
 
     public void setHorsePowers(int horsePowers) {
         this.horsePowers = horsePowers;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override

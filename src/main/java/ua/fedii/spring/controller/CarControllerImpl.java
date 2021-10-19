@@ -5,26 +5,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.fedii.spring.dao.CarRepository;
 import ua.fedii.spring.model.Car;
+import ua.fedii.spring.service.CarService;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/cars")
-public class CarControllerImpl implements CarController {
+public class CarControllerImpl {
     @Autowired
-    private CarRepository carRepository;
+    private CarService carService;
 
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("cars", carRepository.findAll());
+        model.addAttribute("cars", carService.findAll());
         return ("index");
     }
 
     @GetMapping("/{idCar}")
     public String show(@PathVariable("idCar") int idCar, Model model) {
-        model.addAttribute("car", carRepository.getById(idCar));
+        model.addAttribute("car", carService.findById(idCar));
         return ("show");
     }
 
@@ -40,13 +40,13 @@ public class CarControllerImpl implements CarController {
             return "new";
         }
 
-        carRepository.save(car);
+        carService.save(car);
         return "redirect:/cars/index";
     }
 
-    @GetMapping("/{idCar}/edit")
+    @GetMapping("/edit/{idCar}")
     public String edit(Model model, @PathVariable("idCar") int idCar) {
-        model.addAttribute("car", carRepository.getById(idCar));
+        model.addAttribute("car", carService.findById(idCar));
         return "edit";
     }
 
@@ -57,15 +57,19 @@ public class CarControllerImpl implements CarController {
             return "edit";
         }
 
-        carRepository.save(car);
+        carService.save(car);
         return "redirect:/cars/index";
     }
 
-    @GetMapping("/{idCar}/delete")
-    public String deleteUser(@PathVariable("idCar") int idCar) {
-        Car car = carRepository.findById(idCar)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid car id:" + idCar));
-        carRepository.delete(car);
+    @GetMapping("/delete/{idCar}")
+    public String deleteCar(@PathVariable("idCar") int idCar) {
+        Car car = carService.findById(idCar);
+
+        if (car == null) {
+            throw new RuntimeException("Car id not found - " + idCar);
+        }
+
+        carService.deleteById(idCar);
         return "redirect:/cars/index";
     }
 }

@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Cars</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cars</title>
 </head>
 
 <body>
@@ -31,11 +31,12 @@
                     <td th:text="${car.productionYear}" align="center"></td>
                     <td th:text="${car.weight}" align="center"></td>
                     <td th:text="${car.horsePowers}" align="center"></td>
-                    <td><a th:href="@{/cars/{idCar}/edit(idCar=${car.id})}" align="center">Edit</a></td>
-                    <td><a th:href="@{/cars/{idCar}/delete(idCar=${car.id})}" align="center">Delete</a></td>
+                    <td><a th:href="@{/cars/edit/{idCar}(idCar=${car.id})}" align="center">Edit</a></td>
+                    <td><a th:href="@{/cars/delete/{idCar}(idCar=${car.id})}" align="center">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
+            <a th:href="@{/cars/new}">Add new car</a>
         </div>
     </div>
 </body>

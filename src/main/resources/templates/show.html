@@ -14,9 +14,9 @@
     <p th:text="${car.weight}">Weight</p>
     <p th:text="${car.horsePowers}">Horse Powers</p>
 
-    <a th:href="@{/cars/{idCar}/edit(idCar=${car.id})}">Edit</a>
+    <a th:href="@{/cars/edit/{idCar}(idCar=${car.id})}">Edit</a>
 
-    <form th:method="GET" th:action="@{/cars/{idCar}/delete(idCar=${car.id})}">
+    <form th:method="GET" th:action="@{/cars/delete/{idCar}(idCar=${car.id})}">
         <input type="submit" value="Delete">
     </form>
 </body>
