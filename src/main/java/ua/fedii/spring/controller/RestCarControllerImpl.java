@@ -19,7 +19,7 @@ public class RestCarControllerImpl {
         return carService.findAll();
     }
 
-    @GetMapping("/cars/{carId}")
+    @GetMapping("/cars/{idCar}")
     public Car getCar(@PathVariable int idCar) {
         Car car = carService.findById(idCar);
 
