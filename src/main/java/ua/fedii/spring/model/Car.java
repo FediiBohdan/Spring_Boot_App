@@ -1,7 +1,10 @@
 package ua.fedii.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -12,7 +15,7 @@ import javax.validation.constraints.Size;
 @Table(name="car")
 @SQLDelete(sql = "UPDATE car SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
-public class Car {
+public class Car extends RepresentationModel<Car> {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
@@ -45,6 +48,7 @@ public class Car {
 
     public Car() {}
 
+    @JsonCreator
     public Car(String brand, String model, int productionYear, float weight, int horsePowers, boolean isDeleted) {
         this.brand = brand;
         this.model = model;
@@ -54,6 +58,7 @@ public class Car {
         this.isDeleted = isDeleted;
     }
 
+    @JsonCreator
     public Car(int id, String brand, String model, int productionYear, float weight, int horsePowers, boolean isDeleted) {
         this.id = id;
         this.brand = brand;

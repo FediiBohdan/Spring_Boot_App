@@ -1,16 +1,20 @@
 package ua.fedii.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.fedii.spring.model.Car;
 import ua.fedii.spring.service.CarService;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 @RestController
 @RequestMapping("/api")
-public class RestCarControllerImpl {
+public class RestCarController {
     @Autowired
     private CarService carService;
 
@@ -20,14 +24,17 @@ public class RestCarControllerImpl {
     }
 
     @GetMapping("/cars/{idCar}")
-    public Car getCar(@PathVariable int idCar) {
+    public HttpEntity<Car> getCar(@PathVariable int idCar) {
         Car car = carService.findById(idCar);
 
         if (car == null) {
             throw new RuntimeException("Car id not found: " + idCar);
         }
 
-        return car;
+        car.add(linkTo(methodOn(RestCarController.class).getCar(idCar)).withSelfRel());
+        car.add(linkTo(methodOn(RestCarController.class).findAll()).withRel("all"));
+
+        return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
     @PostMapping("/cars")

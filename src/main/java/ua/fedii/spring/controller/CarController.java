@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/cars")
-public class CarControllerImpl {
+public class CarController {
     @Autowired
     private CarService carService;
 
